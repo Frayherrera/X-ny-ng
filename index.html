@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xìnyǎng — Restaurante Chino · Aguachica</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Cinzel:wght@400;600;900&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #9b1a1a;
+    --red-deep: #6b0f0f;
+    --red-bright: #c0392b;
+    --red-glow: #e74c3c;
+    --gold: #d4a843;
+    --gold-light: #f0c96e;
+    --cream: #f7f0e0;
+    --cream-dim: #c8b99a;
+    --ink: #0f0505;
+    --ink-mid: #1c0808;
+    --ink-warm: #2a0e0e;
+    --paper: #fdf6e8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'IM Fell English', Georgia, serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ======= HERO ======= */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  /* Animated red ink background */
+  .hero-ink {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(155,26,26,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 70%, rgba(107,15,15,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 80% 20%, rgba(107,15,15,0.2) 0%, transparent 60%);
+    animation: inkPulse 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes inkPulse {
+    0% { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.05); }
+  }
+
+  /* Chinese character watermarks */
+  .hero-hanzi {
+    position: absolute;
+    font-family: 'Noto Serif SC', serif;
+    color: rgba(155,26,26,0.08);
+    pointer-events: none;
+    user-select: none;
+    animation: floatHanzi 12s ease-in-out infinite;
+  }
+
+  .h1 { font-size: 28vw; top: -5%; left: -8%; animation-delay: 0s; }
+  .h2 { font-size: 18vw; bottom: -10%; right: -5%; animation-delay: -4s; font-size: 22vw; }
+  .h3 { font-size: 12vw; top: 10%; right: 10%; color: rgba(212,168,67,0.05); animation-delay: -8s; }
+
+  @keyframes floatHanzi {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-20px) rotate(1deg); }
+  }
+
+  /* Vertical red stripe accent */
+  .hero-stripe {
+    position: absolute;
+    left: 12%;
+    top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, transparent 0%, var(--red) 20%, var(--gold) 50%, var(--red) 80%, transparent 100%);
+    opacity: 0.6;
+  }
+
+  .hero-stripe-r {
+    position: absolute;
+    right: 12%;
+    top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, transparent 0%, var(--red) 20%, var(--gold) 50%, var(--red) 80%, transparent 100%);
+    opacity: 0.6;
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    padding: 2rem;
+    animation: heroFade 1.4s ease forwards;
+  }
+
+  @keyframes heroFade {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-chinese {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(4rem, 15vw, 10rem);
+    font-weight: 700;
+    color: var(--red-bright);
+    letter-spacing: 0.2em;
+    line-height: 1;
+    text-shadow:
+      0 0 60px rgba(192,57,43,0.6),
+      0 0 120px rgba(192,57,43,0.2);
+    opacity: 0;
+    animation: heroFade 1s ease 0.3s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.5rem, 9vw, 7rem);
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    color: var(--cream);
+    line-height: 1;
+    margin-top: 0.2em;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.8);
+    opacity: 0;
+    animation: heroFade 1s ease 0.6s forwards;
+  }
+
+  .hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 0.8em;
+    opacity: 0;
+    animation: heroFade 1s ease 0.9s forwards;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem auto;
+    max-width: 300px;
+    opacity: 0;
+    animation: heroFade 1s ease 1.1s forwards;
+  }
+
+  .hero-divider::before, .hero-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .hero-address {
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    color: rgba(199,185,154,0.7);
+    font-style: italic;
+    opacity: 0;
+    animation: heroFade 1s ease 1.3s forwards;
+  }
+
+  .hero-info {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 1rem;
+    opacity: 0;
+    animation: heroFade 1s ease 1.5s forwards;
+  }
+
+  .hero-info a {
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .hero-info a:hover { color: white; }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: heroFade 1s ease 1.8s forwards;
+  }
+
+  .hero-scroll span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--red-bright);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(180deg, var(--red-bright), transparent);
+    animation: scrollDrop 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollDrop {
+    0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+    50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+  }
+
+  /* ======= NAV ======= */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15,5,5,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(155,26,26,0.4);
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+
+  .nav-hanzi {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.4rem;
+    color: var(--red-bright);
+  }
+
+  .nav-text {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    color: var(--cream);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--red-bright);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--red-glow); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ======= SECTION BASE ======= */
+  .section-wrap {
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-eyebrow {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.5rem;
+    color: var(--red-bright);
+    display: block;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.2em;
+    text-shadow: 0 0 20px rgba(192,57,43,0.4);
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .section-rule {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem auto 0;
+    max-width: 280px;
+  }
+
+  .section-rule::before, .section-rule::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+  }
+
+  .rule-diamond {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ======= FULL DIVIDER BAND ======= */
+  .band {
+    width: 100%;
+    background: linear-gradient(135deg, var(--red-deep) 0%, var(--red) 50%, var(--red-deep) 100%);
+    border-top: 1px solid rgba(212,168,67,0.3);
+    border-bottom: 1px solid rgba(212,168,67,0.3);
+    padding: 1.2rem 0;
+    overflow: hidden;
+  }
+
+  .band-inner {
+    display: flex;
+    gap: 2.5rem;
+    animation: bandScroll 18s linear infinite;
+    white-space: nowrap;
+  }
+
+  .band-item {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(247,240,224,0.7);
+    flex-shrink: 0;
+  }
+
+  .band-sep {
+    color: var(--gold);
+    font-size: 0.8rem;
+  }
+
+  @keyframes bandScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ======= PLATOS PRINCIPALES - card grid ======= */
+  .plato-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2px;
+    background: rgba(155,26,26,0.15);
+  }
+
+  .plato-card {
+    background: var(--ink-mid);
+    padding: 2.2rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.35s;
+    cursor: default;
+  }
+
+  .plato-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(155,26,26,0.1) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+
+  .plato-card:hover { background: var(--ink-warm); }
+  .plato-card:hover::before { opacity: 1; }
+
+  /* Left red edge on hover */
+  .plato-card::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 20%; bottom: 20%;
+    width: 0;
+    background: var(--red-bright);
+    transition: width 0.35s, top 0.35s, bottom 0.35s;
+  }
+
+  .plato-card:hover::after { width: 3px; top: 10%; bottom: 10%; }
+
+  .plato-hanzi {
+    position: absolute;
+    top: -0.5rem; right: 1rem;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 5rem;
+    color: rgba(155,26,26,0.07);
+    line-height: 1;
+    pointer-events: none;
+    transition: color 0.35s;
+  }
+
+  .plato-card:hover .plato-hanzi { color: rgba(155,26,26,0.13); }
+
+  .plato-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .plato-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.3;
+  }
+
+  .plato-price {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--gold);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .plato-desc {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: rgba(199,185,154,0.7);
+    font-style: italic;
+  }
+
+  /* ======= ARROZ TABLE SECTION ======= */
+  .rice-section {
+    background: linear-gradient(180deg, var(--ink-mid) 0%, var(--ink-warm) 100%);
+    border: 1px solid rgba(155,26,26,0.3);
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+
+  .rice-header {
+    background: var(--red-deep);
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .rice-hanzi-big {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 3.5rem;
+    color: rgba(212,168,67,0.7);
+    line-height: 1;
+  }
+
+  .rice-title-wrap {}
+
+  .rice-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--cream);
+    letter-spacing: 0.1em;
+  }
+
+  .rice-subtitle {
+    font-size: 0.95rem;
+    color: rgba(199,185,154,0.6);
+    font-style: italic;
+    margin-top: 0.2rem;
+  }
+
+  .rice-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .rice-table tr {
+    border-bottom: 1px solid rgba(155,26,26,0.15);
+    transition: background 0.2s;
+  }
+
+  .rice-table tr:last-child { border-bottom: none; }
+  .rice-table tr:hover { background: rgba(155,26,26,0.08); }
+
+  .rice-table td {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    color: var(--cream-dim);
+  }
+
+  .rice-table td:last-child {
+    text-align: right;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    color: var(--gold);
+    font-size: 1.05rem;
+  }
+
+  .rice-portion-label {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    background: rgba(155,26,26,0.3);
+    border: 1px solid rgba(155,26,26,0.5);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    margin-right: 0.5rem;
+    color: rgba(247,240,224,0.9);
+  }
+
+  /* ======= COMBINADOS ======= */
+  .combo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .combo-card {
+    background: linear-gradient(145deg, var(--ink-mid), var(--ink-warm));
+    border: 1px solid rgba(155,26,26,0.3);
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .combo-card:hover {
+    border-color: var(--red-bright);
+    transform: translateY(-4px);
+  }
+
+  /* corner decoration */
+  .combo-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px;
+    width: 20px; height: 20px;
+    border-top: 2px solid var(--gold);
+    border-left: 2px solid var(--gold);
+  }
+
+  .combo-card::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; right: -1px;
+    width: 20px; height: 20px;
+    border-bottom: 2px solid var(--gold);
+    border-right: 2px solid var(--gold);
+  }
+
+  .combo-num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 3rem;
+    color: rgba(155,26,26,0.25);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .combo-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .combo-desc {
+    font-size: 0.95rem;
+    color: rgba(199,185,154,0.7);
+    font-style: italic;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+
+  .combo-price {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--gold);
+  }
+
+  /* ======= TABS ======= */
+  .tab-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-bottom: 3rem;
+    background: rgba(155,26,26,0.15);
+    padding: 2px;
+  }
+
+  .tab-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.2rem;
+    border: none;
+    background: transparent;
+    color: rgba(199,185,154,0.6);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .tab-btn:hover { color: var(--cream); background: rgba(155,26,26,0.2); }
+
+  .tab-btn.active {
+    background: var(--red);
+    color: var(--cream);
+  }
+
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; animation: panelFade 0.4s ease; }
+
+  @keyframes panelFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ======= LUMPIA SPECIAL ======= */
+  .lumpia-box {
+    background: linear-gradient(135deg, var(--red-deep) 0%, var(--ink-warm) 50%, var(--red-deep) 100%);
+    border: 1px solid rgba(212,168,67,0.3);
+    padding: 3rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .lumpia-box::before {
+    content: '饺';
+    position: absolute;
+    right: -2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18rem;
+    color: rgba(155,26,26,0.07);
+    line-height: 1;
+  }
+
+  .lumpia-inner {
+    position: relative;
+    max-width: 600px;
+  }
+
+  .lumpia-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .lumpia-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    line-height: 1;
+  }
+
+  .lumpia-variants {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .lumpia-variant {
+    flex: 1;
+    min-width: 200px;
+    background: rgba(0,0,0,0.3);
+    border-left: 3px solid var(--red-bright);
+    padding: 1rem 1.2rem;
+  }
+
+  .lumpia-variant-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+
+  .lumpia-variant-desc {
+    font-size: 0.92rem;
+    color: rgba(199,185,154,0.7);
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+  }
+
+  .lumpia-prices {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .lumpia-price-item {
+    text-align: center;
+  }
+
+  .lumpia-price-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(199,185,154,0.5);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .lumpia-price-val {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--gold);
+  }
+
+  /* ======= ADICIONALES + GRANIZADOS ======= */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+  .side-box {
+    background: var(--ink-mid);
+    border: 1px solid rgba(155,26,26,0.25);
+    overflow: hidden;
+  }
+
+  .side-box-header {
+    background: var(--red-deep);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(212,168,67,0.3);
+  }
+
+  .side-box-hanzi {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.5rem;
+    color: rgba(212,168,67,0.6);
+  }
+
+  .side-box-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  .side-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.85rem 1.5rem;
+    border-bottom: 1px solid rgba(155,26,26,0.1);
+    font-size: 1rem;
+    transition: background 0.2s;
+  }
+
+  .side-row:last-child { border-bottom: none; }
+  .side-row:hover { background: rgba(155,26,26,0.07); }
+  .side-row-name { color: var(--cream-dim); }
+  .side-row-price { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1rem; }
+
+  /* ======= CONTACT ======= */
+  .contact-section {
+    background: linear-gradient(135deg, var(--ink-warm) 0%, var(--ink-mid) 100%);
+    border: 1px solid rgba(155,26,26,0.3);
+    padding: 3rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-section::before {
+    content: '信';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 30rem;
+    color: rgba(155,26,26,0.04);
+    pointer-events: none;
+  }
+
+  .contact-inner { position: relative; }
+
+  .contact-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: var(--cream);
+    margin-bottom: 2rem;
+  }
+
+  .contact-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .contact-item {
+    text-align: center;
+  }
+
+  .contact-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--red-bright);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .contact-val {
+    font-size: 1.05rem;
+    color: var(--cream-dim);
+    font-style: italic;
+  }
+
+  .contact-val a {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contact-val a:hover { color: var(--gold-light); }
+
+  .contact-badges {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .badge {
+    background: rgba(155,26,26,0.25);
+    border: 1px solid rgba(155,26,26,0.4);
+    padding: 0.4rem 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(199,185,154,0.8);
+  }
+
+  /* ======= FOOTER ======= */
+  footer {
+    background: var(--ink);
+    border-top: 2px solid var(--red-deep);
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+  }
+
+  .footer-hanzi {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 3.5rem;
+    color: var(--red-bright);
+    text-shadow: 0 0 30px rgba(192,57,43,0.4);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .footer-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--cream);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-rule {
+    width: 40px;
+    height: 1px;
+    background: var(--red);
+    margin: 1rem auto;
+  }
+
+  .footer-ig {
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+  }
+
+  .footer-copy {
+    font-size: 0.85rem;
+    color: rgba(199,185,154,0.4);
+    margin-top: 1.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* ======= SCROLL REVEAL ======= */
+  .reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ======= RESPONSIVE ======= */
+  @media (max-width: 768px) {
+    nav { padding: 1rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">
+    <span class="nav-hanzi">信</span>
+    <span class="nav-text">Xìnyǎng</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#combinados">Combinados</a></li>
+    <li><a href="#lumpia">Lumpia</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-ink"></div>
+  <div class="hero-hanzi h1">信</div>
+  <div class="hero-hanzi h2">养</div>
+  <div class="hero-hanzi h3">福</div>
+  <div class="hero-stripe"></div>
+  <div class="hero-stripe-r"></div>
+  <div class="hero-content">
+    <div class="hero-chinese">信养</div>
+    <div class="hero-name">Xìnyǎng</div>
+    <div class="hero-sub">Restaurante Chino · Aguachica, Cesar</div>
+    <div class="hero-divider"><div class="rule-diamond"></div></div>
+    <div class="hero-address">Cl. 1 #24-82 Local 1 · Sabanita · Aguachica</div>
+    <div class="hero-info">
+      <a href="tel:3114335431">☎ 311 433 5431</a>
+      <a href="https://www.instagram.com/co_xinyang" target="_blank">Instagram @co_xinyang</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Explorar</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<!-- BAND -->
+<div class="band">
+  <div class="band-inner">
+    <span class="band-item">Arroz Chino</span><span class="band-sep">❖</span>
+    <span class="band-item">Chop Suey</span><span class="band-sep">❖</span>
+    <span class="band-item">Chow Mein</span><span class="band-sep">❖</span>
+    <span class="band-item">Espaguetti Chino</span><span class="band-sep">❖</span>
+    <span class="band-item">Lumpia</span><span class="band-sep">❖</span>
+    <span class="band-item">Combinados</span><span class="band-sep">❖</span>
+    <span class="band-item">Platos Especiales</span><span class="band-sep">❖</span>
+    <span class="band-item">Granizados</span><span class="band-sep">❖</span>
+    <!-- repeat -->
+    <span class="band-item">Arroz Chino</span><span class="band-sep">❖</span>
+    <span class="band-item">Chop Suey</span><span class="band-sep">❖</span>
+    <span class="band-item">Chow Mein</span><span class="band-sep">❖</span>
+    <span class="band-item">Espaguetti Chino</span><span class="band-sep">❖</span>
+    <span class="band-item">Lumpia</span><span class="band-sep">❖</span>
+    <span class="band-item">Combinados</span><span class="band-sep">❖</span>
+    <span class="band-item">Platos Especiales</span><span class="band-sep">❖</span>
+    <span class="band-item">Granizados</span><span class="band-sep">❖</span>
+  </div>
+</div>
+
+<!-- MENU PRINCIPAL -->
+<div id="menu" style="background: var(--ink);">
+<div class="section-wrap">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">菜单</span>
+    <h2 class="section-title">Nuestra Carta</h2>
+    <div class="section-rule"><div class="rule-diamond"></div></div>
+  </div>
+
+  <div class="tab-bar reveal">
+    <button class="tab-btn active" onclick="showTab('arroces', this)">Arroces Chinos</button>
+    <button class="tab-btn" onclick="showTab('platos', this)">Platos Especiales</button>
+    <button class="tab-btn" onclick="showTab('sopas', this)">Sopas & Fideos</button>
+  </div>
+
+  <!-- ARROCES -->
+  <div id="tab-arroces" class="menu-panel active">
+    <div class="rice-section reveal">
+      <div class="rice-header">
+        <div class="rice-hanzi-big">饭</div>
+        <div class="rice-title-wrap">
+          <div class="rice-title">Arroz Chino Tradicional</div>
+          <div class="rice-subtitle">Arroz, pollo, carne de res, jamón, zanahoria, habichuela, lechuga, raíz china</div>
+        </div>
+      </div>
+      <table class="rice-table">
+        <tr><td><span class="rice-portion-label">Mini</span></td><td>$10.000</td></tr>
+        <tr><td><span class="rice-portion-label">Personal</span></td><td>$15.000</td></tr>
+        <tr><td><span class="rice-portion-label">2 personas</span></td><td>$23.000</td></tr>
+        <tr><td><span class="rice-portion-label">3 personas</span></td><td>$33.000</td></tr>
+        <tr><td><span class="rice-portion-label">4 personas</span></td><td>$40.000</td></tr>
+        <tr><td><span class="rice-portion-label">Familiar</span></td><td>$55.000</td></tr>
+      </table>
+    </div>
+
+    <div class="rice-section reveal" style="margin-top:2rem;">
+      <div class="rice-header">
+        <div class="rice-hanzi-big">虾</div>
+        <div class="rice-title-wrap">
+          <div class="rice-title">Arroz Chino con Camarón</div>
+          <div class="rice-subtitle">Arroz, pollo, carne de res, jamón, zanahoria, habichuela, lechuga, raíz china + camarón</div>
+        </div>
+      </div>
+      <table class="rice-table">
+        <tr><td><span class="rice-portion-label">Mini</span></td><td>$17.000</td></tr>
+        <tr><td><span class="rice-portion-label">Personal</span></td><td>$23.000</td></tr>
+        <tr><td><span class="rice-portion-label">2 personas</span></td><td>$30.000</td></tr>
+        <tr><td><span class="rice-portion-label">3 personas</span></td><td>$40.000</td></tr>
+        <tr><td><span class="rice-portion-label">4 personas</span></td><td>$45.000</td></tr>
+        <tr><td><span class="rice-portion-label">Familiar</span></td><td>$62.000</td></tr>
+      </table>
+    </div>
+
+    <div class="rice-section reveal" style="margin-top:2rem;">
+      <div class="rice-header">
+        <div class="rice-hanzi-big">鸡</div>
+        <div class="rice-title-wrap">
+          <div class="rice-title">Arroz Valenciana</div>
+          <div class="rice-subtitle">Arroz chino tradicional, papas a la francesa y pollo apanado</div>
+        </div>
+      </div>
+      <table class="rice-table">
+        <tr><td><span class="rice-portion-label">Personal</span></td><td>$23.000</td></tr>
+        <tr><td><span class="rice-portion-label">2 personas</span></td><td>$38.000</td></tr>
+        <tr><td><span class="rice-portion-label">Familiar</span></td><td>$68.000</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PLATOS ESPECIALES -->
+  <div id="tab-platos" class="menu-panel">
+    <div class="plato-grid reveal">
+      <div class="plato-card">
+        <div class="plato-hanzi">鸡</div>
+        <div class="plato-top"><span class="plato-name">Pechuga a la Plancha</span><span class="plato-price">$25.000</span></div>
+        <p class="plato-desc">Arroz chino tradicional y papas a la francesa.</p>
+      </div>
+      <div class="plato-card">
+        <div class="plato-hanzi">翼</div>
+        <div class="plato-top"><span class="plato-name">Alitas BBQ</span><span class="plato-price">$25.000</span></div>
+        <p class="plato-desc">Arroz chino tradicional y papas a la francesa.</p>
+      </div>
+      <div class="plato-card">
+        <div class="plato-hanzi">猪</div>
+        <div class="plato-top"><span class="plato-name">Lomo de Cerdo Salteado</span><span class="plato-price">$25.000</span></div>
+        <p class="plato-desc">Arroz chino tradicional y papas a la francesa.</p>
+      </div>
+      <div class="plato-card">
+        <div class="plato-hanzi">甜</div>
+        <div class="plato-top"><span class="plato-name">Pollo Agridulce</span><span class="plato-price">$25.000</span></div>
+        <p class="plato-desc">Arroz chino tradicional y papas a la francesa.</p>
+      </div>
+      <div class="plato-card">
+        <div class="plato-hanzi">骨</div>
+        <div class="plato-top"><span class="plato-name">Costillas BBQ</span><span class="plato-price">$25.000</span></div>
+        <p class="plato-desc">Arroz chino tradicional y papas a la francesa.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOPAS & FIDEOS -->
+  <div id="tab-sopas" class="menu-panel">
+    <div class="plato-grid reveal">
+      <div class="plato-card">
+        <div class="plato-hanzi">汤</div>
+        <div class="plato-top"><span class="plato-name">Chop Suey</span><span class="plato-price">$15.000</span></div>
+        <p class="plato-desc">Brócoli, coliflor, yota, pepino, zanahoria, pimentón, cebolla blanca y apio en rama, salteados al wok con pollo y carne de res. Porción personal.</p>
+      </div>
+      <div class="plato-card">
+        <div class="plato-hanzi">面</div>
+        <div class="plato-top"><span class="plato-name">Chow Mein</span><span class="plato-price">$18.000</span></div>
+        <p class="plato-desc">Fideos salteados al wok con pollo y carne de res, mezcla de vegetales frescos: brócoli, coliflor, yota, pepino, zanahoria, pimentón, cebolla blanca y apio. Porción personal.</p>
+      </div>
+      <div class="plato-card">
+        <div class="plato-hanzi">粉</div>
+        <div class="plato-top"><span class="plato-name">Espaguetti Chino</span><span class="plato-price">$15.000</span></div>
+        <p class="plato-desc">Fideos salteados al wok con pollo y carne de res, cebolla blanca para un toque de sabor y suavidad. Porción personal.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- COMBINADOS -->
+<div style="background: var(--ink-mid); border-top: 1px solid rgba(155,26,26,0.3);">
+<div id="combinados" class="section-wrap">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">组合</span>
+    <h2 class="section-title">Combinados</h2>
+    <div class="section-rule"><div class="rule-diamond"></div></div>
+  </div>
+  <div class="combo-grid reveal">
+    <div class="combo-card">
+      <div class="combo-num">一</div>
+      <div class="combo-name">Xinyang Maojian</div>
+      <div class="combo-desc">Chop Suey, arroz chino tradicional y papas a la francesa.</div>
+      <div class="combo-price">$25.000</div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-num">二</div>
+      <div class="combo-name">Wudang Especial</div>
+      <div class="combo-desc">Chow Mein, arroz chino tradicional y papas a la francesa.</div>
+      <div class="combo-price">$25.000</div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-num">三</div>
+      <div class="combo-name">Dragón Dorado</div>
+      <div class="combo-desc">Espaguetti chino, papas a la francesa y 1 lumpia.</div>
+      <div class="combo-price">$25.000</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- LUMPIA -->
+<div style="background: var(--ink);">
+<div id="lumpia" class="section-wrap">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">饺子</span>
+    <h2 class="section-title">Lumpia</h2>
+    <div class="section-rule"><div class="rule-diamond"></div></div>
+  </div>
+  <div class="lumpia-box reveal">
+    <div class="lumpia-inner">
+      <span class="lumpia-label">Doradas a la perfección · bocado crujiente e irresistible</span>
+      <div class="lumpia-title">Tortillas Rellenas</div>
+      <div class="lumpia-variants">
+        <div class="lumpia-variant">
+          <div class="lumpia-variant-name">Lumpia Tradicional</div>
+          <div class="lumpia-variant-desc">Crujiente tortilla de harina de trigo rellena de repollo, carne molida y jamón. Un clásico que nunca falla.</div>
+        </div>
+        <div class="lumpia-variant">
+          <div class="lumpia-variant-name">Lumpia Jamón y Queso</div>
+          <div class="lumpia-variant-desc">Delicada tortilla rellena de queso derretido y jamón, perfecta para los amantes de los sabores suaves y cremosos.</div>
+        </div>
+      </div>
+      <div class="lumpia-prices">
+        <div class="lumpia-price-item">
+          <span class="lumpia-price-label">1 unidad</span>
+          <span class="lumpia-price-val">$6.000</span>
+        </div>
+        <div class="lumpia-price-item">
+          <span class="lumpia-price-label">2 unidades</span>
+          <span class="lumpia-price-val">$11.000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ADICIONALES + GRANIZADOS -->
+<div style="background: var(--ink-mid); border-top: 1px solid rgba(155,26,26,0.2);">
+<div class="section-wrap">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">附加</span>
+    <h2 class="section-title">Adicionales & Bebidas</h2>
+    <div class="section-rule"><div class="rule-diamond"></div></div>
+  </div>
+  <div class="two-col reveal">
+    <div>
+      <div class="side-box" style="margin-bottom:1.5rem;">
+        <div class="side-box-header">
+          <span class="side-box-hanzi">加</span>
+          <span class="side-box-title">Adicionales</span>
+        </div>
+        <div class="side-row"><span class="side-row-name">Porción de Papa a la Francesa</span><span class="side-row-price">$8.000</span></div>
+        <div class="side-row"><span class="side-row-name">Porción de Camarón</span><span class="side-row-price">$8.000</span></div>
+        <div class="side-row"><span class="side-row-name">Pollo Apanado (pierna pernil + papas)</span><span class="side-row-price">$18.000</span></div>
+      </div>
+      <div class="side-box">
+        <div class="side-box-header">
+          <span class="side-box-hanzi">柠</span>
+          <span class="side-box-title">Limonada</span>
+        </div>
+        <div class="side-row"><span class="side-row-name">Jarra de Limonada</span><span class="side-row-price">$8.000</span></div>
+      </div>
+    </div>
+    <div class="side-box">
+      <div class="side-box-header">
+        <span class="side-box-hanzi">冰</span>
+        <span class="side-box-title">Granizados</span>
+      </div>
+      <div class="side-row"><span class="side-row-name">Maracuyá</span><span class="side-row-price">$8.000</span></div>
+      <div class="side-row"><span class="side-row-name">Lulo</span><span class="side-row-price">$8.000</span></div>
+      <div class="side-row"><span class="side-row-name">Mora</span><span class="side-row-price">$8.000</span></div>
+      <div class="side-row"><span class="side-row-name">Naranja</span><span class="side-row-price">$7.000</span></div>
+      <div class="side-row"><span class="side-row-name">Limón</span><span class="side-row-price">$7.000</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- CONTACTO -->
+<div id="contacto" style="background: var(--ink); border-top: 1px solid rgba(155,26,26,0.3);">
+<div class="section-wrap">
+  <div class="contact-section reveal">
+    <div class="contact-inner">
+      <div class="contact-title">Visítanos · 联系我们</div>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <span class="contact-label">Dirección</span>
+          <div class="contact-val">Cl. 1 #24-82 Local 1, Sabanita<br>Aguachica, Cesar</div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Teléfono</span>
+          <div class="contact-val"><a href="tel:3114335431">311 433 5431</a></div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Horario</span>
+          <div class="contact-val">Abierto · Cierra 10 p.m.</div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Instagram</span>
+          <div class="contact-val"><a href="https://www.instagram.com/co_xinyang" target="_blank">@co_xinyang</a></div>
+        </div>
+      </div>
+      <div class="contact-badges">
+        <span class="badge">Consumo en el lugar</span>
+        <span class="badge">Para llevar</span>
+        <span class="badge">Domicilio</span>
+        <span class="badge">Amigable LGBTQ+</span>
+        <span class="badge">★★★★★ 4.9</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-hanzi">信养</span>
+  <div class="footer-name">Xìnyǎng</div>
+  <div class="footer-rule"></div>
+  <div class="footer-ig">@co_xinyang</div>
+  <div class="footer-copy">Restaurante Chino · Aguachica, Cesar · Colombia</div>
+</footer>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
